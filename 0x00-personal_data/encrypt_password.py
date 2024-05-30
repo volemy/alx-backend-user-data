@@ -1,29 +1,17 @@
 #!/usr/bin/env python3
-"""
-password encryption.
+""" password encryption
 """
 import bcrypt
 
 
 def hash_password(password: str) -> bytes:
+    """ Method that takes in a password string arguments and returns
+        a salted, hashed password, which is a byte string.
     """
-    Hashes a password using bcrypt.
-
-    Arguments:
-        password: a string representing the password to hash
-
-    Returns:
-        a salted, hashed password, which is a byte string
-    """
-    pswd_encoded = password.encode()
-    pswd_hashed = bcrypt.hashpw(pswd_encoded, bcrypt.gensalt())
-    return pswd_hashed
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
 
 def is_valid(hashed_password: bytes, password: str) -> bool:
-    '''Check valid password'''
-    valid = False
-    pswd_encoded = password.encode()
-    if bcrypt.checkpw(pswd_encoded, hashed_password):
-        valid = True
-    return valid
+    """ Method that checks if a provided password matches the hashed password.
+    """
+    return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
